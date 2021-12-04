@@ -1,3 +1,4 @@
+import 'package:doctor_gopalganj/model/clinic_model.dart';
 import 'package:doctor_gopalganj/model/doctor_model.dart';
 
 class DoctorRepo{
@@ -5,68 +6,24 @@ class DoctorRepo{
     DoctorModel(
         "Burn Specialists",
         "Dr. Md Imran Laskar",
-        "MBBS, FCPS",
+        "MBBS(Dhaka Medical College), FCPS(UK)",
         "Dept. Head ,BIRDEM",
-        "Modhumoti Diagnostic Centre",
-        "3:00-6:00 PM",
-        "Sun-Sat",
-        "+8801905531000",
-        "600"
+      [
+        ClinicModel(
+            "TTC Clinic",
+            "Autocad Lab, TTC Clinic, Ghonapara",
+            "Sun-Sat",
+            "9:00am- 5:00pm",
+            "+880187834783"),
+        ClinicModel(
+            "DC Clinic",
+            "DC Clinic, Ghonapara",
+            "Sun-Sat",
+            "9:00am- 5:00pm",
+            "+880187834783"),
+      ]
+
     ),
-    DoctorModel(
-        "Burn Specialists",
-        "Dr. Md Saidujjaman Jweyl",
-        "MBBS, FCPS",
-        "Dept. Head ,BIRDEM",
-        "Modhumoti Diagnostic Centre",
-        "3:00-6:00 PM",
-        "Sun-Sat",
-        "+8801905531000",
-        "600"
-    ),
-    DoctorModel(
-        "Child Specialists",
-        "Dr. Md Saidujjaman Jweyl",
-        "MBBS, FCPS",
-        "Dept. Head ,BIRDEM",
-        "Modhumoti Diagnostic Centre",
-        "3:00-6:00 PM",
-        "Sun-Sat",
-        "+8801905531000",
-        "600"
-    ),
-    DoctorModel(
-        "Burn",
-        "Dr. Md Saidujjaman Jweyl",
-        "MBBS, FCPS",
-        "Dept. Head ,BIRDEM",
-        "Modhumoti Diagnostic Centre",
-        "3:00-6:00 PM",
-        "Sun-Sat",
-        "+8801905531000",
-        "600"
-    ),
-    DoctorModel(
-        "Burn",
-        "Dr. Md Saidujjaman Jweyl",
-        "MBBS, FCPS",
-        "Dept. Head ,BIRDEM",
-        "Modhumoti Diagnostic Centre",
-        "3:00-6:00 PM",
-        "Sun-Sat",
-        "+8801905531000",
-        "600"
-    ),
-    DoctorModel(
-        "Burn",
-        "Dr. Md Saidujjaman Jweyl",
-        "MBBS, FCPS",
-        "Dept. Head ,BIRDEM",
-        "Modhumoti Diagnostic Centre",
-        "3:00-6:00 PM",
-        "Sun-Sat",
-        "+8801905531000",
-        "600"
-    ),
+
   ];
 }

@@ -1,4 +1,4 @@
-import 'package:doctor_gopalganj/doctor_list_show.dart';
+import 'package:doctor_gopalganj/screens/doctor_list_show.dart';
 import 'package:doctor_gopalganj/provider/doctor_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
