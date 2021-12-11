@@ -40,7 +40,8 @@ class _DoctorListShowState extends State<DoctorListShow> {
                           (builder: (context)=>DoctorDetails(
                             doctorModel: docProvider.allTypelList[index])));
                       },
-                      child: Container(
+                      child:
+                      Container(
                         decoration: BoxDecoration(
                           color: Colors.teal.shade50,
                           border: Border.all(
