@@ -11,23 +11,33 @@ class DoctorRepo{
         "Dr. Md Imam",
         "MBBS(Dhaka Medical College), FCPS(UK)",
         "Dept. Head ,BIRDEM",
-      [
-        clinicRepo.clinicModelList[0],
-        clinicRepo.clinicModelList[2]
-      ]
+
     ),
     DoctorModel(
         "Burn Specialists",
         "Dr. Md Imran Laskar",
         "MBBS(Dhaka Medical College), FCPS(UK)",
         "Dept. Head ,BIRDEM",
-      [
-        clinicRepo.clinicModelList[0],
-        clinicRepo.clinicModelList[3]
-      ]
 
     )
   ];
-
+  List<String> docTypeList=[
+    "Burn Specialists",
+    "Cancer Specialists",
+    "Cardiology Specialists",
+    "Child Specialists",
+    "Dental Specialists",
+    "Dermatology Specialists",
+    "Diabetes Specialists",
+    "ENT Specialists",
+    "Burn Specialists",
+    "Cancer Specialists",
+    "Cardiology Specialists",
+    "Child Specialists",
+    "Dental Specialists",
+    "Dermatology Specialists",
+    "Diabetes Specialists",
+    "ENT Specialists"
+  ];
 
 }

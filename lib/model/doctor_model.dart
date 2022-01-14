@@ -5,8 +5,6 @@ class DoctorModel{
  late String name;
  late String degree;
  late String position;
- late List<ClinicModel> clinicModelList;
-
  DoctorModel(this.docType, this.name,
-     this.degree, this.position,this.clinicModelList);
+     this.degree, this.position);
 }

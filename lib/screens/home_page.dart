@@ -3,6 +3,7 @@ import 'package:doctor_gopalganj/screens/clinic_wise_doctor.dart';
 import 'package:doctor_gopalganj/screens/doc_details.dart';
 import 'package:doctor_gopalganj/screens/doctor_list_show.dart';
 import 'package:doctor_gopalganj/screens/doctor_type_show.dart';
+import 'package:doctor_gopalganj/screens/new_clinic_list.dart';
 import 'package:doctor_gopalganj/utills/menu_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
@@ -21,9 +22,6 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     Provider.of<DoctorProvider>(context,
         listen: false).initializeDoctorModelList();
-    Provider.of<DoctorProvider>(context,
-        listen: false).getClinicList();
-
 
     double height= MediaQuery.of(context).size.height;
     double width= MediaQuery.of(context).size.width;
@@ -71,11 +69,11 @@ class _HomePageState extends State<HomePage> {
                 else if(title=="All Clinics")
 
                 {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder:
-                  //       (context) => Employees()),
-                  // );
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder:
+                        (context) => ClinicListShow()),
+                  );
                 }
                 else if(title=="All Diagnostics")
                 {
@@ -200,8 +198,7 @@ class _HomePageState extends State<HomePage> {
                         scrollDirection: Axis.horizontal,
                         child: Row(
                           children: [
-                            for(int i=0;i<
-                                docProvider.allClinicList.length;i++)
+
                               Padding(
                                 padding: const EdgeInsets.all(8.0),
                                 child: InkWell(
@@ -210,9 +207,7 @@ class _HomePageState extends State<HomePage> {
                                     Navigator.push(context,
                                         MaterialPageRoute(builder:
                                             (context)=>
-                                                ClinicWiseDoctor(
-                                                  clinicModel:
-                                                  docProvider.allClinicList[i])));
+                                                ClinicWiseDoctor()));
                                   },
                                   child: Container(
                                     height: 160,
@@ -247,12 +242,12 @@ class _HomePageState extends State<HomePage> {
                                               ),
                                             ),
                                           ),
-                                          Text(docProvider.allClinicList[i].clinicName,
+                                          Text("Clinic name",
                                             textAlign: TextAlign.center,
                                             style: TextStyle(fontSize: 16),),
                                           SizedBox(
                                             width: 200,
-                                            child: Text(docProvider.allClinicList[i].clinicAddress,
+                                            child: Text("address",
                                               textAlign: TextAlign.center,
                                               style: TextStyle(fontSize: 12),),
                                           ),
@@ -269,72 +264,7 @@ class _HomePageState extends State<HomePage> {
                       SizedBox(
                         height: 10,
                       ),
-                      Text("Popular Diagnostic",
-                        style: TextStyle(
-                            color: Color(0xff26734d),
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold
-                        ),
-                      ),
 
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-                            for(int i=0;i<docProvider.allDoctorModelList.length;i++)
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  height: 160,
-                                  width: 200,
-                                  decoration: BoxDecoration(
-                                      color: Colors.teal.shade50,
-                                      border: Border.all(
-                                          color: Colors.blueGrey
-                                      ),
-                                      borderRadius: BorderRadius.circular(8)
-                                  ),
-                                  child: Padding(
-                                    padding: const EdgeInsets.all(12.0),
-                                    child:
-                                    Column(
-                                      children: [
-                                        Padding(
-                                          padding: const EdgeInsets.all(8.0),
-                                          child: Container(
-                                            height: 70,
-                                            width: 70,
-                                            decoration: BoxDecoration(
-                                              border: Border.all(
-                                                  width: 2,
-                                                  color: Colors.blueGrey
-                                              ),
-                                              image: DecorationImage(
-                                                  image: AssetImage("assets/image/diag.jpg"),
-                                                  fit: BoxFit.cover),
-                                              borderRadius: BorderRadius.circular(180),
-                                              color: Colors.teal,
-                                            ),
-                                          ),
-                                        ),
-                                        Text(docProvider.allDoctorModelList[i].name,
-                                          textAlign: TextAlign.center,
-                                          style: TextStyle(fontSize: 18),),
-                                        SizedBox(
-                                          width: 200,
-                                          child: Text(docProvider.allDoctorModelList[i].docType,
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(fontSize: 16),),
-                                        ),
-
-                                      ],
-                                    ),
-                                  ),
-                                ),
-                              )
-                          ],
-                        ),
-                      ),
                     ],
                   ),
                 ),

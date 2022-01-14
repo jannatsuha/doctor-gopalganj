@@ -1,3 +1,5 @@
+import 'dart:collection';
+
 import 'package:doctor_gopalganj/model/clinic_model.dart';
 import 'package:doctor_gopalganj/model/doctor_model.dart';
 import 'package:doctor_gopalganj/repo/clinic_repo.dart';
@@ -33,30 +35,47 @@ class DoctorProvider with ChangeNotifier {
 
   //clinic
   ClinicRepo clinicRepo=ClinicRepo();
-  List<ClinicModel> _allClinicList= [];
-  List<ClinicModel> get allClinicList =>
-      _allClinicList;
-  getClinicList(){
-    //_allClinicList.clear();
-    _allClinicList=clinicRepo.clinicModelList;
+
+
+
+
+  //searching part
+  UnmodifiableListView<DoctorModel> get docListNew
+  => searchData.isEmpty
+      ? UnmodifiableListView(_allTypeList)
+      : UnmodifiableListView(
+      _allTypeList.where((emp) =>
+          emp.name.toLowerCase().contains(searchData.toLowerCase())));
+
+  String searchData="";
+  getSearchData(val){
+    searchData=val;
     notifyListeners();
   }
 
+
   // clinic doctors list
   List<DoctorModel> clinicModelListDcotor=[];
-  getClinicWiseDoctor(String cliName){
-    for(int i=0;i<_allDoctorModelList.length;i++)
-      {
-        for(int j=0;j<_allClinicList.length;j++)
-        {
-          if(_allDoctorModelList[i].
-          clinicModelList[j].clinicName == cliName){
-            clinicModelListDcotor.add(
-                _allDoctorModelList[i]);
-            notifyListeners();
-          }
-        }
-      }
+  // getClinicWiseDoctor(String cliName){
+  //   for(int i=0;i<_allDoctorModelList.length;i++)
+  //     {
+  //       for(int j=0;j<_allClinicList.length;j++)
+  //       {
+  //         if(_allDoctorModelList[i].
+  //         clinicModelList[j].clinicName == cliName){
+  //           clinicModelListDcotor.add(
+  //               _allDoctorModelList[i]);
+  //           notifyListeners();
+  //         }
+  //       }
+  //     }
+  //   notifyListeners();
+  // }
+
+  // doctor type list
+ List<String> doctorTypeList= [];
+  getDoctorList(){
+    doctorTypeList=doctorRepo.docTypeList;
     notifyListeners();
   }
 }

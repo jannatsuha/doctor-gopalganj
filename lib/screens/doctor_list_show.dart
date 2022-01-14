@@ -12,25 +12,78 @@ class DoctorListShow extends StatefulWidget {
   _DoctorListShowState createState() => _DoctorListShowState();
 }
 
+Widget appBarText=Text("Burn Specialists");
+Icon searchIcon=Icon(Icons.search);
+String searchText="";
+TextEditingController textController= TextEditingController();
 class _DoctorListShowState extends State<DoctorListShow> {
+
+  @override
+  void initState() {
+    textController.addListener(() {
+      if(textController.text.isEmpty) {
+        searchText = "";
+      } else {
+
+        searchText = textController.text;
+      }
+    });
+    super.initState();
+  }
+  // @override
+  // void dispose() {
+  //   textController.dispose();
+  //   super.dispose();
+  // }
+
   @override
   Widget build(BuildContext context) {
+
     Provider.of<DoctorProvider>(context,listen:
     false).initializeDoctorModelList();
     Provider.of<DoctorProvider>(context,listen:
     false).doctorTypeFilter(widget.title);
     return Scaffold(
-      appBar: AppBar(
+      appBar:
+      AppBar(
         centerTitle: true,
         backgroundColor: Color(0xff26734d),
-        title: Text(widget.title),
+        title: appBarText,
+        actions: [
+          IconButton(
+              onPressed: (){
+                setState(() {
+                  if(searchIcon.icon==Icons.search)
+                  {
+                    searchIcon= Icon(Icons.clear);
+                    appBarText=TextField(
+                      onChanged: (val){
+                        Provider.of<DoctorProvider>
+                          (context,listen: false).getSearchData(val);
+                      },
+                      controller: textController,
+                      decoration: InputDecoration(
+                        hintText: "Search here...",
+                        hintStyle: TextStyle(color:
+                        Colors.white)
+                      ),
+                    );
+                  }else{
+                    searchIcon= Icon(Icons.search);
+                    appBarText=Text("Burn Specialists");
+                    textController.clear();
+                  }
+                });
+              },
+              icon: searchIcon)
+        ],
       ),
       body: Consumer<DoctorProvider>(
         builder: (context,docProvider, child){
           return Center(
             child: Expanded(
               child: ListView.builder(
-                itemCount: docProvider.allTypelList.length,
+                itemCount: docProvider.docListNew.length,
                 itemBuilder: (context,index){
                   return Padding(
                     padding: const EdgeInsets.all(10.0),
@@ -38,7 +91,7 @@ class _DoctorListShowState extends State<DoctorListShow> {
                       onTap: (){
                         Navigator.push(context, MaterialPageRoute
                           (builder: (context)=>DoctorDetails(
-                            doctorModel: docProvider.allTypelList[index])));
+                            doctorModel: docProvider.docListNew[index])));
                       },
                       child:
                       Container(
@@ -72,11 +125,12 @@ class _DoctorListShowState extends State<DoctorListShow> {
                                   ),
                                 ),
                               ),
-                              Text(docProvider.allTypelList[index].name,
+                              Text(docProvider.docListNew[index].name,
                               style: TextStyle(fontSize: 20),),
                               SizedBox(
                                 width: 200,
-                                child: Text(docProvider.allTypelList[index].degree,
+                                child: Text(docProvider.
+                                docListNew[index].degree,
                                   textAlign: TextAlign.center,
                                   style: TextStyle(fontSize: 16),),
                               ),

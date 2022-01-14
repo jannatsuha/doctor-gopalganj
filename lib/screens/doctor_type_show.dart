@@ -35,33 +35,55 @@ List<Color> btnColorList=[
   Color(0xff8cd9b3),
   Color(0xff9fdfbf),
 ];
-List<String> docTypeList=[
-  "Burn Specialists",
-  "Cancer Specialists",
-  "Cardiology Specialists",
-  "Child Specialists",
-  "Dental Specialists",
-  "Dermatology Specialists",
-  "Diabetes Specialists",
-  "ENT Specialists",
-  "Burn Specialists",
-  "Cancer Specialists",
-  "Cardiology Specialists",
-  "Child Specialists",
-  "Dental Specialists",
-  "Dermatology Specialists",
-  "Diabetes Specialists",
-  "ENT Specialists"
-];
+Widget _appBarText=Text("Burn Specialists");
+Icon _searchIcon=Icon(Icons.search);
+String _searchText="";
+TextEditingController _textController= TextEditingController();
+
 class _DoctorTypeShowState extends State<DoctorTypeShow> {
   @override
   Widget build(BuildContext context) {
+    Provider.of<DoctorProvider>(context,listen: false)
+        .getDoctorList();
     Provider.of<DoctorProvider>(context,listen: false).initializeDoctorModelList();
     return Scaffold(
-      appBar: AppBar(
+      appBar:  AppBar(
         centerTitle: true,
         backgroundColor: Color(0xff26734d),
-        title: Text("Doctor's Chamber"),
+        title: _appBarText,
+        actions: [
+          IconButton(
+              onPressed: (){
+                setState(() {
+                  if(_searchIcon.icon==Icons.search)
+                  {
+                    _searchIcon= Icon(Icons.clear);
+                    _appBarText=TextField(
+                      style: TextStyle(color:
+                      Colors.white),
+                      onChanged: (val){
+                        Provider.of<DoctorProvider>
+                          (context,listen: false)
+                            .getSearchData(val);
+                      },
+                      controller: _textController,
+                      decoration: InputDecoration(
+                        labelStyle: TextStyle(color:
+                        Colors.white),
+                          hintText: "Search here...",
+                          hintStyle: TextStyle(color:
+                          Colors.white)
+                      ),
+                    );
+                  }else{
+                    _searchIcon= Icon(Icons.search);
+                    _appBarText=Text("Burn Specialists");
+                    _textController.clear();
+                  }
+                });
+              },
+              icon: _searchIcon)
+        ],
       ),
       body: Consumer<DoctorProvider>(
         builder: (context,docProvider,child){
@@ -69,7 +91,7 @@ class _DoctorTypeShowState extends State<DoctorTypeShow> {
             children: [
               Expanded(
                 child: ListView.builder(
-                    itemCount: docTypeList.length,
+                    itemCount: docProvider.doctorTypeList.length,
                     itemBuilder: (context,index){
                       return Padding(
                         padding: const EdgeInsets.only(
@@ -79,7 +101,8 @@ class _DoctorTypeShowState extends State<DoctorTypeShow> {
                           onTap: (){
                             Navigator.push(context,
                                 MaterialPageRoute(builder: (context)=>
-                                DoctorListShow(title:docTypeList[index])));
+                                DoctorListShow(title:
+                                    docProvider.doctorTypeList[index])));
                           },
                           child: Container(
                             height: 40,
@@ -92,7 +115,7 @@ class _DoctorTypeShowState extends State<DoctorTypeShow> {
                                 color: btnColorList[index]
                             ),
                             child: Center(
-                              child: Text(docTypeList[index],
+                              child: Text( docProvider.doctorTypeList[index],
                                 textAlign: TextAlign.center
                                 ,style: TextStyle(
                                     color: Colors.white,

@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "276892949946",
+    "project_id": "gopalganj-doctor",
+    "storage_bucket": "gopalganj-doctor.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:276892949946:android:684256fefa095adabbd183",
+        "android_client_info": {
+          "package_name": "com.example.doctor_gopalganj"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "276892949946-o4mv78ioh1ct2i8h2jcf3l1le3vfs51n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBNDSAuvTkDYEsZMCKS92vZz2vA5Zd7UDk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "276892949946-o4mv78ioh1ct2i8h2jcf3l1le3vfs51n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
