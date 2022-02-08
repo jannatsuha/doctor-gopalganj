@@ -6,27 +6,26 @@ import 'package:doctor_gopalganj/utills/custom_appbar_one.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:url_launcher/url_launcher.dart';
-class DoctorDetails extends StatefulWidget {
+class DoctorDetailsClinicWise extends StatefulWidget {
   DoctorModel doctorModel;
-   DoctorDetails({Key? key,
-  required this.doctorModel}) : super(key: key);
+  DoctorDetailsClinicWise({Key? key,
+    required this.doctorModel}) : super(key: key);
 
   @override
-  _DoctorDetailsState createState() => _DoctorDetailsState();
+  _DoctorDetailsClinicWiseState createState() => _DoctorDetailsClinicWiseState();
 }
 
-class _DoctorDetailsState extends State<DoctorDetails> {
+class _DoctorDetailsClinicWiseState extends State<DoctorDetailsClinicWise> {
 
   @override
   Widget build(BuildContext context) {
     List<String>tempTypeList=
         Provider.of<DoctorProvider>(context,listen:
-    false).doctorTypeList;
-    Provider.of<DoctorProvider>(context,listen: false)
-        .getDoctorList();
+        false).doctorTypeList;
+
     Provider.of<DoctorProvider>(context,listen: false)
         .initializeClinicModelList();
-   // DoctorProvider doctorProvider=DoctorProvider();
+    DoctorProvider doctorProvider=DoctorProvider();
     ClinicRepo clinicRepo=ClinicRepo();
     return Scaffold(
       appBar: AppBar(
@@ -60,10 +59,10 @@ class _DoctorDetailsState extends State<DoctorDetails> {
                       style: TextStyle(fontSize: 20,color:
                       AllColor.appColor,fontWeight: FontWeight.bold),),
                     SizedBox(height: 5,),
-                    Text(tempTypeList[widget.doctorModel.docType!],
-                     textAlign: TextAlign.center,
-                      style: TextStyle(fontSize: 15,color:
-                      AllColor.appFontColor,fontWeight: FontWeight.bold),),
+                    // Text(tempTypeList[widget.doctorModel.docType!],
+                    //  textAlign: TextAlign.center,
+                    //   style: TextStyle(fontSize: 15,color:
+                    //   AllColor.appFontColor,fontWeight: FontWeight.bold),),
                   ],
                 ),
               ),
@@ -78,7 +77,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
           children: [
             Text("বিশেষ অভিজ্ঞ : ",
               style: TextStyle(
-                color: AllColor.appColor,
+                  color: AllColor.appColor,
                   fontSize: 17,
                   fontWeight: FontWeight.bold
               ),),
@@ -121,21 +120,20 @@ class _DoctorDetailsState extends State<DoctorDetails> {
               ),),
             SizedBox(height: 16,),
 
-            Text("চেম্বারের ঠিকানা  : ",
-              style: TextStyle(
-                  color: AllColor.appColor,
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold
-              ),),
-            SizedBox(height: 6,),
-            Text
-              (clinicRepo.clinicModelList[
-                widget.doctorModel.clinicId!
-            ].clinicName!,
-              style: TextStyle(
-                  fontSize: 15,
-                  fontWeight: FontWeight.bold
-              ),),
+            // Text("চেম্বারের ঠিকানা  : ",
+            //   style: TextStyle(
+            //       color: AllColor.appColor,
+            //       fontSize: 17,
+            //       fontWeight: FontWeight.bold
+            //   ),),
+            // SizedBox(height: 6,),
+            // Text(clinicRepo.clinicModelList[
+            //     widget.doctorModel.clinicId!
+            // ].clinicName!,
+            //   style: TextStyle(
+            //       fontSize: 15,
+            //       fontWeight: FontWeight.bold
+            //   ),),
             SizedBox(height: 16,),
 
             Text("রোগী দেখার সময় : ",
@@ -147,7 +145,7 @@ class _DoctorDetailsState extends State<DoctorDetails> {
             SizedBox(height: 6,),
             Text
               (widget.doctorModel.day.toString()+"  ( "+
-              widget.doctorModel.time.toString()+")",
+                widget.doctorModel.time.toString()+")",
               style: TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold
@@ -155,33 +153,33 @@ class _DoctorDetailsState extends State<DoctorDetails> {
 
             SizedBox(height: 16,),
 
-            Text("মোবাইল নাম্বার : ",
-              style: TextStyle(
-                  color: AllColor.appColor,
-                  fontSize: 17,
-                  fontWeight: FontWeight.bold
-              ),),
-            SizedBox(height: 6,),
-            Row(
-              children: [
-                InkWell(
-                    onTap: (){
-                      launch("tel://${clinicRepo.clinicModelList[
-                      widget.doctorModel.clinicId!
-                      ].number1!}");
-                    },
-                    child: Icon(Icons.call,
-                      color: AllColor.appColor,)),
-                SizedBox(width: 5,),
-                Text(clinicRepo.clinicModelList[
-                widget.doctorModel.clinicId!
-                ].number1!,
-                  style: TextStyle(
-                      fontSize: 15,
-                      fontWeight: FontWeight.bold
-                  ),),
-              ],
-            ),
+            // Text("মোবাইল নাম্বার : ",
+            //   style: TextStyle(
+            //       color: AllColor.appColor,
+            //       fontSize: 17,
+            //       fontWeight: FontWeight.bold
+            //   ),),
+            // SizedBox(height: 6,),
+            // Row(
+            //   children: [
+            //     InkWell(
+            //         onTap: (){
+            //           launch("tel://${clinicRepo.clinicModelList[
+            //           widget.doctorModel.clinicId!
+            //           ].number1!}");
+            //         },
+            //         child: Icon(Icons.call,
+            //           color: AllColor.appColor,)),
+            //     SizedBox(width: 5,),
+            //     Text(clinicRepo.clinicModelList[
+            //     widget.doctorModel.clinicId!
+            //     ].number1!,
+            //       style: TextStyle(
+            //           fontSize: 15,
+            //           fontWeight: FontWeight.bold
+            //       ),),
+            //   ],
+            // ),
 
           ],
         ),

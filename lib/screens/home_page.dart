@@ -3,10 +3,13 @@ import 'package:doctor_gopalganj/screens/clinic_wise_doctor.dart';
 import 'package:doctor_gopalganj/screens/doc_details.dart';
 import 'package:doctor_gopalganj/screens/doctor_list_show.dart';
 import 'package:doctor_gopalganj/screens/doctor_type_show.dart';
+import 'package:doctor_gopalganj/screens/home_view.dart';
 import 'package:doctor_gopalganj/screens/new_clinic_list.dart';
+import 'package:doctor_gopalganj/utills/all_colors.dart';
 import 'package:doctor_gopalganj/utills/menu_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_slider_drawer/flutter_slider_drawer.dart';
+import 'package:google_nav_bar/google_nav_bar.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -18,262 +21,167 @@ class HomePage extends StatefulWidget {
 GlobalKey<SliderMenuContainerState> _key =
 new GlobalKey<SliderMenuContainerState>();
 class _HomePageState extends State<HomePage> {
+  int _selectedIndex = 1;
+  static const TextStyle optionStyle =
+  TextStyle(fontSize: 30, fontWeight: FontWeight.w600);
+  static  List<Widget> _widgetOptions = <Widget>[
+    ClinicListShow(),
+    HomeView(),
+    DoctorTypeShow()
+
+  ];
   @override
   Widget build(BuildContext context) {
     Provider.of<DoctorProvider>(context,
-        listen: false).initializeDoctorModelList();
+        listen: true).initializeDoctorModelList();
 
     double height= MediaQuery.of(context).size.height;
     double width= MediaQuery.of(context).size.width;
 
-    return Scaffold(
-      body:
-      SliderMenuContainer(
-          appBarColor: Colors.teal,
-          key: _key,
-          sliderMenuCloseSize: 0,
-          title: Text("HOME",style: TextStyle(color: Colors.white,
-              fontSize: width*0.055,fontWeight: FontWeight.w800),),
-          shadowColor: Colors.transparent,
-          drawerIconColor: Colors.white,
-          drawerIconSize: width*0.08,
-          //slideDirection: Slider.RIGHT_TO_LEFT,
-          //appBarPadding: const EdgeInsets.only(top: 10),
-          sliderMenuOpenSize: 280,
-          appBarHeight: 100,
-          appBarPadding: EdgeInsets.fromLTRB(0, 40, 0, 0),
-          sliderMenu:
-          MenuWidget(
-            //  onProfilePictureClick: () {},
-            onItemClick: (title) {
-              _key.currentState!.closeDrawer();
-              setState(() {
-                title = title;
-                if(title=="HOME")
-                {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder:
-                  //       (context) => MyHomePage()),
-                  // );
-                }
-                else if(title=="Doctor's List")
-                {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder:
-                        (context) =>
-                            DoctorTypeShow()),
-                  );
-                }
-                else if(title=="All Clinics")
+   return Scaffold(
+      backgroundColor: Colors.white,
+      body: Center(
+        child: _widgetOptions.elementAt(_selectedIndex),
+      ),
+      bottomNavigationBar: Container(
+        decoration: BoxDecoration(
+          color: Colors.white,
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 20,
+              color: Colors.black.withOpacity(.1),
+            )
+          ],
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 8),
+          child: GNav(
+            rippleColor: Colors.grey[300]!,
+            hoverColor: Colors.grey[100]!,
+            gap: 8,
+            activeColor: Colors.black,
+            iconSize: 24,
+            padding: EdgeInsets.symmetric(horizontal: 20, vertical: 12),
+            duration: Duration(milliseconds: 400),
+            tabBackgroundColor: Colors.grey[100]!,
+            color: Colors.black,
+            tabs: [
+              GButton(
+                icon: Icons.local_hospital,
+                text: 'CLINICS',
+                textColor: AllColor.appColor,
+                iconColor: AllColor.appColor,
+                iconActiveColor: AllColor.appColor,
 
-                {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder:
-                        (context) => ClinicListShow()),
-                  );
-                }
-                else if(title=="All Diagnostics")
-                {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder:
-                  //       (context) => Quiz()),
-                  // );
-                }
-                else if(title=="ABOUT US")
-                {
-                  // Navigator.push(
-                  //   context,
-                  //   MaterialPageRoute(builder:
-                  //       (context) => AboutUs()),
-                  // );
-                }
+              ),
+              GButton(
+                icon: Icons.home,
+                textColor: AllColor.appColor,
+                iconColor: AllColor.appColor,
+                iconActiveColor: AllColor.appColor,
+                text: 'HOME',
+              ),
+              GButton(
+                icon: Icons.account_box,
+                text: 'DOCTORS',
+                textColor: AllColor.appColor,
+                iconColor: AllColor.appColor,
+                iconActiveColor: AllColor.appColor,
+              ),
+
+            ],
+            selectedIndex: _selectedIndex,
+            onTabChange: (index) {
+              setState(() {
+                _selectedIndex = index;
               });
             },
           ),
-          sliderMain:
-        Container(
-          color: Colors.white,
-          child: Consumer<DoctorProvider>(
-            builder: (context,docProvider,child){
-              return Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: SingleChildScrollView(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    crossAxisAlignment: CrossAxisAlignment.start,
-
-                    children: [
-                      Text("Popular Doctors",
-                        style: TextStyle(
-                            color: Color(0xff26734d),
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold
-                        ),
-                      ),
-
-                     SingleChildScrollView(
-                       scrollDirection: Axis.horizontal,
-                       child: Row(
-                         children: [
-                           for(int i=0;i<docProvider.allDoctorModelList.length;i++)
-                             Padding(
-                               padding: const EdgeInsets.all(8.0),
-                               child: InkWell(
-                                 onTap: (){
-                                   Navigator.push(context,
-                                       MaterialPageRoute(builder: (context)=>
-                                           DoctorDetails(
-                                             doctorModel: docProvider
-                                                 .allDoctorModelList[i],)));
-
-                                 },
-                                 child: Container(
-                                   height: 160,
-                                   width: 200,
-                                   decoration: BoxDecoration(
-                                       color: Colors.teal.shade50,
-                                       border: Border.all(
-                                           color: Colors.blueGrey
-                                       ),
-                                       borderRadius: BorderRadius.circular(8)
-                                   ),
-                                   child: Padding(
-                                     padding: const EdgeInsets.all(12.0),
-                                     child:
-                                     Column(
-                                       children: [
-                                         Padding(
-                                           padding: const EdgeInsets.all(8.0),
-                                           child: Container(
-                                             height: 70,
-                                             width: 70,
-                                             decoration: BoxDecoration(
-                                               border: Border.all(
-                                                   width: 2,
-                                                   color: Colors.blueGrey
-                                               ),
-                                               image: DecorationImage(
-                                                   image: AssetImage("assets/image/docpic.jpg"),
-                                                   fit: BoxFit.cover),
-                                               borderRadius: BorderRadius.circular(180),
-                                               color: Colors.teal,
-                                             ),
-                                           ),
-                                         ),
-                                         Text(docProvider.allDoctorModelList[i].name,
-                                           textAlign: TextAlign.center,
-                                           style: TextStyle(fontSize: 18),),
-                                         SizedBox(
-                                           width: 200,
-                                           child: Text(docProvider.allDoctorModelList[i].docType,
-                                             textAlign: TextAlign.center,
-                                             style: TextStyle(fontSize: 16),),
-                                         ),
-
-                                       ],
-                                     ),
-                                   ),
-                                 ),
-                               ),
-                             )
-                         ],
-                       ),
-                     ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      Text("Popular Clinics",
-                        style: TextStyle(
-                            color: Color(0xff26734d),
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold
-                        ),
-                      ),
-
-                      SingleChildScrollView(
-                        scrollDirection: Axis.horizontal,
-                        child: Row(
-                          children: [
-
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: InkWell(
-                                  onTap: (){
-
-                                    Navigator.push(context,
-                                        MaterialPageRoute(builder:
-                                            (context)=>
-                                                ClinicWiseDoctor()));
-                                  },
-                                  child: Container(
-                                    height: 160,
-                                    width: 200,
-                                    decoration: BoxDecoration(
-                                        color: Colors.teal.shade50,
-                                        border: Border.all(
-                                            color: Colors.blueGrey
-                                        ),
-                                        borderRadius: BorderRadius.circular(8)
-                                    ),
-                                    child: Padding(
-                                      padding: const EdgeInsets.all(12.0),
-                                      child:
-                                      Column(
-                                        children: [
-                                          Padding(
-                                            padding: const EdgeInsets.all(8.0),
-                                            child: Container(
-                                              height: 70,
-                                              width: 70,
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                    width: 2,
-                                                    color: Colors.blueGrey
-                                                ),
-                                                image: DecorationImage(
-                                                    image: AssetImage("assets/image/clinic.png"),
-                                                    fit: BoxFit.cover),
-                                                borderRadius: BorderRadius.circular(180),
-                                                color: Colors.teal,
-                                              ),
-                                            ),
-                                          ),
-                                          Text("Clinic name",
-                                            textAlign: TextAlign.center,
-                                            style: TextStyle(fontSize: 16),),
-                                          SizedBox(
-                                            width: 200,
-                                            child: Text("address",
-                                              textAlign: TextAlign.center,
-                                              style: TextStyle(fontSize: 12),),
-                                          ),
-
-                                        ],
-                                      ),
-                                    ),
-                                  ),
-                                ),
-                              )
-                          ],
-                        ),
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-
-                    ],
-                  ),
-                ),
-              );
-            },
-          ),
-        )
+        ),
       ),
-
     );
+
+    // return Scaffold(
+    //   body:
+
+    //         );
+    //       },
+    //     ),
+    //   )
+
+
+
+      // SliderMenuContainer(
+      //     hasAppBar: true,
+      //     appBarColor: AllColor.appColor,
+      //     key: _key,
+      //     sliderMenuCloseSize: 0,
+      //     title: Text("HOME",style: TextStyle(color: Colors.white,
+      //         fontSize: width*0.055,fontWeight: FontWeight.w800),),
+      //     shadowColor: Colors.transparent,
+      //     drawerIconColor: Colors.white,
+      //     drawerIconSize: width*0.08,
+      //     //slideDirection: Slider.RIGHT_TO_LEFT,
+      //     //appBarPadding: const EdgeInsets.only(top: 10),
+      //     sliderMenuOpenSize: 280,
+      //     appBarHeight: 100,
+      //     appBarPadding: EdgeInsets.fromLTRB(0, 40, 0, 0),
+      //     sliderMenu:
+      //     MenuWidget(
+      //       //  onProfilePictureClick: () {},
+      //       onItemClick: (title) {
+      //         _key.currentState!.closeDrawer();
+      //         setState(() {
+      //           title = title;
+      //           if(title=="HOME")
+      //           {
+      //             // Navigator.push(
+      //             //   context,
+      //             //   MaterialPageRoute(builder:
+      //             //       (context) => MyHomePage()),
+      //             // );
+      //           }
+      //           else if(title=="Doctor's List")
+      //           {
+      //             Navigator.push(
+      //               context,
+      //               MaterialPageRoute(builder:
+      //                   (context) =>
+      //                       DoctorTypeShow()),
+      //             );
+      //           }
+      //           else if(title=="All Clinics")
+      //
+      //           {
+      //             Navigator.push(
+      //               context,
+      //               MaterialPageRoute(builder:
+      //                   (context) => ClinicListShow()),
+      //             );
+      //           }
+      //           else if(title=="All Diagnostics")
+      //           {
+      //             // Navigator.push(
+      //             //   context,
+      //             //   MaterialPageRoute(builder:
+      //             //       (context) => Quiz()),
+      //             // );
+      //           }
+      //           else if(title=="ABOUT US")
+      //           {
+      //             // Navigator.push(
+      //             //   context,
+      //             //   MaterialPageRoute(builder:
+      //             //       (context) => AboutUs()),
+      //             // );
+      //           }
+      //         });
+      //       },
+      //     ),
+      //    // sliderMain:
+      //
+      // ),
+
+    //);
   }
 }

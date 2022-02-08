@@ -1,10 +1,10 @@
 class ClinicModel{
-  late String clinicName;
-  late String clinicAddress;
-  late String visitingDay;
-  late String visitingHour;
-  late String number;
+   String? clinicName;
+   String? clinicAddress;
+   String? visitingDay;
+   String? number1;
+   String? number2;
 
-  ClinicModel(this.clinicName, this.clinicAddress, this.visitingDay,
-      this.visitingHour, this.number);
+  ClinicModel({this.clinicName, this.clinicAddress, this.visitingDay,
+      this.number1, this.number2});
 }

@@ -1,25 +1,31 @@
 import 'package:doctor_gopalganj/provider/doctor_provider.dart';
 import 'package:doctor_gopalganj/screens/doc_details.dart';
+import 'package:doctor_gopalganj/utills/all_colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 class DoctorListShow extends StatefulWidget {
   String title;
-   DoctorListShow({Key? key,required this.title})
+  int typeIndex;
+   DoctorListShow({Key? key,
+     required this.title,
+     required this.typeIndex,
+   })
        : super(key: key);
 
   @override
   _DoctorListShowState createState() => _DoctorListShowState();
 }
 
-Widget appBarText=Text("Burn Specialists");
-Icon searchIcon=Icon(Icons.search);
-String searchText="";
-TextEditingController textController= TextEditingController();
-class _DoctorListShowState extends State<DoctorListShow> {
 
+class _DoctorListShowState extends State<DoctorListShow> {
+  Widget? appBarText;
+  Icon searchIcon=Icon(Icons.search);
+  String searchText="";
+  TextEditingController textController= TextEditingController();
   @override
   void initState() {
+    appBarText=Text(widget.title);
     textController.addListener(() {
       if(textController.text.isEmpty) {
         searchText = "";
@@ -42,12 +48,12 @@ class _DoctorListShowState extends State<DoctorListShow> {
     Provider.of<DoctorProvider>(context,listen:
     false).initializeDoctorModelList();
     Provider.of<DoctorProvider>(context,listen:
-    false).doctorTypeFilter(widget.title);
+    false).doctorTypeFilter(widget.typeIndex);
     return Scaffold(
       appBar:
       AppBar(
         centerTitle: true,
-        backgroundColor: Color(0xff26734d),
+        backgroundColor: AllColor.appColor,
         title: appBarText,
         actions: [
           IconButton(
@@ -70,8 +76,10 @@ class _DoctorListShowState extends State<DoctorListShow> {
                     );
                   }else{
                     searchIcon= Icon(Icons.search);
-                    appBarText=Text("Burn Specialists");
+                    appBarText=Text(widget.title);
                     textController.clear();
+                    Provider.of<DoctorProvider>
+                      (context,listen: false).getSearchData("");
                   }
                 });
               },
@@ -80,6 +88,9 @@ class _DoctorListShowState extends State<DoctorListShow> {
       ),
       body: Consumer<DoctorProvider>(
         builder: (context,docProvider, child){
+
+          print("test11");
+          print(docProvider.allTypelList.length);
           return Center(
             child: Expanded(
               child: ListView.builder(
@@ -107,30 +118,30 @@ class _DoctorListShowState extends State<DoctorListShow> {
                           child:
                           Column(
                             children: [
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Container(
-                                  height: 90,
-                                  width: 90,
-                                  decoration: BoxDecoration(
-                                    border: Border.all(
-                                      width: 2,
-                                      color: Colors.blueGrey
-                                    ),
-                                    image: DecorationImage(
-                                        image: AssetImage("assets/image/docpic.jpg"),
-                                    fit: BoxFit.cover),
-                                    borderRadius: BorderRadius.circular(180),
-                                    color: Colors.teal,
-                                  ),
-                                ),
-                              ),
-                              Text(docProvider.docListNew[index].name,
+                              // Padding(
+                              //   padding: const EdgeInsets.all(8.0),
+                              //   child: Container(
+                              //     height: 90,
+                              //     width: 90,
+                              //     decoration: BoxDecoration(
+                              //       border: Border.all(
+                              //         width: 2,
+                              //         color: Colors.blueGrey
+                              //       ),
+                              //       image: DecorationImage(
+                              //           image: AssetImage("assets/image/docpic.jpg"),
+                              //       fit: BoxFit.cover),
+                              //       borderRadius: BorderRadius.circular(180),
+                              //       color: Colors.teal,
+                              //     ),
+                              //   ),
+                              // ),
+                              Text(docProvider.docListNew[index].name.toString(),
                               style: TextStyle(fontSize: 20),),
                               SizedBox(
                                 width: 200,
                                 child: Text(docProvider.
-                                docListNew[index].degree,
+                                docListNew[index].degree.toString(),
                                   textAlign: TextAlign.center,
                                   style: TextStyle(fontSize: 16),),
                               ),
